@@ -1,0 +1,48 @@
+{% extends "layouts/admin/layout.html" %}
+{% set active_left_menu = 'trips' %}
+
+{% block pagetitle %}
+Edit Trip
+{% endblock %}
+
+{% block ckeditor_resource %}
+{{ ckeditor.load() }}
+{% endblock %}
+
+{% block content_layout %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <h2>Edit Trip</h2>
+    {% include "message.html" %}
+    <div class="row">
+        <div class="col-md-12">
+            <form enctype="multipart/form-data" method="POST" action="{{ url_for('trips.edit_trip', tripid=triprow.idtrip)}}">
+                <div class="mb-3">
+                    <label for="trip_title">Trip Title</label>
+                    <input type="text" class="form-control" id="trip_title" name="trip_title" value="{{triprow.trip_name}}" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="email">Description</label>
+                  {{ ckeditor.create(value=triprow.trip_description) }}
+                </div>
+    
+                <div class="mb-3">
+                  <label for="address">Thumb Image (Recommended Size - 800 X 600)</label>
+                  <input type="file" class="form-control" id="trip_thumb_image" name="trip_thump_image">
+                  <input type="hidden" name="hdnthumbimage" value="{{triprow.trip_thumbimage}}">
+                  <img src="{{ url_for('trips.display_tripimage', filename=triprow.trip_thumbimage)}}" width="250px" height="150px">
+                </div>
+    
+                <div class="mb-3">
+                    <label for="address">Banner Image (Recommended Size - 1200 X 350)</label>
+                    <input type="file" class="form-control" id="trip_banner_image" name="trip_banner_image">
+                    <input type="hidden" name="hdnbannerimage" value="{{triprow.trip_bannerimage}}">
+                    <img src="{{url_for('trips.display_tripimage', filename=triprow.trip_bannerimage)}}" width="500px" height="150px">
+                </div>
+                <hr class="mb-4">
+                <div class="mb-3"><button class="btn btn-primary" type="submit" name="btnsave" value="save">Save Trip</button></div>
+              </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

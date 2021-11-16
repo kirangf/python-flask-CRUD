@@ -1,0 +1,44 @@
+{% extends "layouts/admin/layout.html" %}
+{% set active_left_menu = 'trips' %}
+
+{% block pagetitle %}
+Add Trip
+{% endblock %}
+
+{% block ckeditor_resource %}
+{{ ckeditor.load() }}
+{% endblock %}
+
+{% block content_layout %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <h2>Add Trip</h2>
+    {% include "message.html" %}
+    <div class="row">
+        <div class="col-md-12">
+            <form enctype="multipart/form-data" method="POST" action="{{ url_for('trips.add_trip')}}">
+                <div class="mb-3">
+                    <label for="trip_title">Trip Title</label>
+                    <input type="text" class="form-control" id="trip_title" name="trip_title" value="{{postData['trip_title']}}" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="email">Description</label>
+                  {{ ckeditor.create() }}
+                </div>
+    
+                <div class="mb-3">
+                  <label for="address">Thumb Image (Recommended Size - 800 X 600)</label>
+                  <input type="file" class="form-control" id="trip_thumb_image" name="trip_thump_image" required="">
+                </div>
+    
+                <div class="mb-3">
+                    <label for="address">Banner Image (Recommended Size - 1200 X 350)</label>
+                    <input type="file" class="form-control" id="trip_banner_image" name="trip_banner_image" required="">
+                </div>
+                <hr class="mb-4">
+                <div class="mb-3"><button class="btn btn-primary" type="submit" name="btnsave" value="save">Save Trip</button></div>
+              </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

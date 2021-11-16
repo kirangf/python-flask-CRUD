@@ -1,0 +1,95 @@
+{% extends "layouts/admin/layout.html" %}
+{% set active_left_menu = 'destination' %}
+
+{% block pagetitle %}
+Destination add
+{% endblock %}
+
+{% block ckeditor_resource %}
+{{ ckeditor.load() }}
+{% endblock %}
+
+{% block content_layout %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <h2>Add Destination</h2>
+    {% include "message.html" %}
+    <div class="row">
+        <div class="col-md-12">
+            <form enctype="multipart/form-data" method="POST" action="{{ url_for('destinations.destination_add')}}">
+                <div class="mb-3">
+                    <label for="trip_title">Destination Title</label>
+                    <input type="text" class="form-control" id="destination_title" name="destination_title" value="{{postData['destination_title']}}" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="email">Description</label>
+                  {{ ckeditor.create(name="destination_description") }}
+                </div>
+    
+                <div class="mb-3">
+                  <label for="address">Thumb Image (Recommended Size - 800 X 600)</label>
+                  <input type="file" class="form-control" id="destination_thumb_image" name="destination_thumb_image" required="">
+                </div>
+    
+                <div class="mb-3">
+                    <label for="address">Banner Image (Recommended Size - 1200 X 350)</label>
+                    <input type="file" class="form-control" id="destination_banner_image" name="destination_banner_image" required="">
+                </div>
+
+                <div class="mb-3">
+                    <label for="email">Highlights</label>
+                    {{ ckeditor.create(name="destination_highlights") }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="address">Highlight Image (Recommended Size - 1200 X 350)</label>
+                    <input type="file" class="form-control" id="destination_highlight_image" name="destination_highlight_image" required="">
+                </div>
+
+                <div class="mb-3">
+                    <label for="email">Actiities</label>
+                    {{ ckeditor.create(name="destination_activities") }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="address">Activity Image (Recommended Size - 1200 X 350)</label>
+                    <input type="file" class="form-control" id="destination_activity_image" name="destination_activity_image" required="">
+                </div>
+
+                <div class="mb-3">
+                    <label for="trip_title">Location Info</label>
+                    <input type="text" class="form-control" id="dest_location_info" name="dest_location_info" value="{{postData['dest_location_info']}}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="trip_title">Language Info</label>
+                    <input type="text" class="form-control" id="dest_language_info" name="dest_language_info" value="{{postData['dest_language_info']}}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="trip_title">Currency Info</label>
+                    <input type="text" class="form-control" id="dest_currency_info" name="dest_currency_info" value="{{postData['dest_currency_info']}}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="trip_title">Cusisine Info</label>
+                    <input type="text" class="form-control" id="dest_cuisine_info" name="dest_cuisine_info" value="{{postData['dest_cuisine_info']}}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="trip_title">Airport Info</label>
+                    <input type="text" class="form-control" id="dest_airport_info" name="dest_airport_info" value="{{postData['dest_airport_info']}}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="trip_title">Flight Duration Info</label>
+                    <input type="text" class="form-control" id="dest_flight_duration_info" name="dest_flight_duration_info" value="{{postData['dest_flight_duration_info']}}" required>
+                </div>
+
+                <hr class="mb-4">
+                <div class="mb-3"><button class="btn btn-primary" type="submit" name="btnsave" value="save">Save Trip</button></div>
+              </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

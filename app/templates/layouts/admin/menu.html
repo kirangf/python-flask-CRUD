@@ -1,0 +1,21 @@
+{% set navigation_bar = [
+  (url_for('dashboard.admin_dashboard'), 'dashboard', 'Dashboard'),
+  (url_for('trips.trip_list'), 'trips', 'Trips'),
+  (url_for('destinations.destination_list'), 'destination', 'Destinations'),
+  (url_for('packages.packages_list'), 'packages', 'Packages'),
+  ('#', 'settings', 'Settings')
+  ] %}
+<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+    <div class="sidebar-sticky">
+      <ul class="nav flex-column">
+        {% for href, id, title in navigation_bar %}
+        <li class="nav-item">
+          <a class="nav-link {% if id == menu_identifier %} active {% endif %}" href="{{ href }}">
+            <span data-feather="home"></span>
+            {{ title }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>

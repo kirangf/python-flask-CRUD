@@ -1,0 +1,67 @@
+{% extends "layouts/admin/layout.html" %}
+{% set active_left_menu = 'packages' %}
+
+{% block pagetitle %}
+Packages add
+{% endblock %}
+
+{% block ckeditor_resource %}
+{{ ckeditor.load() }}
+{% endblock %}
+
+{% block content_layout %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <h2>Add Packages</h2>
+    {% include "message.html" %}
+    <div class="row">
+        <div class="col-md-12">
+            <form enctype="multipart/form-data" method="POST" action="{{ url_for('packages.packages_add')}}">
+                <div class="mb-3">
+                    <label for="trip_title">Packages Title</label>
+                    <input type="text" class="form-control" id="package_name" name="package_name" value="{{postData['package_name']}}" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="email">Description</label>
+                  {{ ckeditor.create(name="package_description") }}
+                </div>
+    
+                <div class="mb-3">
+                  <label for="address">Thumb Image (Recommended Size - 800 X 600)</label>
+                  <input type="file" class="form-control" id="package_thumb_image" name="package_thumb_image" required="">
+                </div>
+    
+                <div class="mb-3">
+                    <label for="address">Banner Image (Recommended Size - 1200 X 350)</label>
+                    <input type="file" class="form-control" id="package_banner_image" name="package_banner_image" required="">
+                </div>
+
+                <div class="mb-3">
+                    <label for="address">Destinations</label>
+                    <select class="form-control" multiple="multiple" name="package_destination" required="">
+                        {% if destinations %}
+                            {% for destination in destinations %}
+                                <option value="{{destination.iddestination}}">{{destination.dest_title}}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="address">Trips</label>
+                    <select class="form-control" multiple="multiple" name="package_trip" required="">
+                        {% if trips: %}
+                            {% for trip in trips %}
+                                <option value="{{trip.idtrip}}">{{trip.trip_name}}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+
+                <hr class="mb-4">
+                <div class="mb-3"><button class="btn btn-primary" type="submit" name="btnsave" value="save">Save Trip</button></div>
+              </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

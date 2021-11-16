@@ -1,0 +1,77 @@
+{% extends "layouts/admin/layout.html" %}
+{% set active_left_menu = 'packages' %}
+
+{% block pagetitle %}
+Package list
+{% endblock %}
+
+{% block content_layout %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <h2>Package List</h2>
+    {% include "message.html" %}
+    <div class="row my-1">
+      <div class="col-md-9 text-left">
+        <form method="POST" action="{{url_for('packages.packages_list')}}">
+          <div class="input-group mb-3">
+            <input type="text" name="search_title" placeholder="Search with package title or description" class="form-control" value="{{searchpresist['search_title']}}">
+            <select class="form-control" name="package_destination">
+              <option value="">Select</option>
+              {% if destinations %}
+                  {% for destination in destinations %}
+                      <option value="{{destination.iddestination}}" {% if destination.iddestination | string() == searchpresist.package_destination %} selected="selected" {% endif %}>{{destination.dest_title}}</option>
+                  {% endfor %}
+              {% endif %}
+            </select>
+            <select class="form-control" name="package_trip">
+              <option value="">Select</option>
+              {% if trips: %}
+                  {% for trip in trips %}
+                      <option value="{{trip.idtrip}}" {% if trip.idtrip | string() == searchpresist.package_trip %} selected="selected" {% endif %}>{{trip.trip_name}}</option>
+                  {% endfor %}
+              {% endif %}
+            </select>
+            <div class="input-group-append">
+              <input type="submit" name="btnsubmit" class="btn btn-primary" value="Search">
+            </div>
+          </div>
+        </form>
+      </div>  
+      <div class="col-md-3 text-right">
+        <a href="{{url_for('packages.packages_add')}}" class="btn btn-primary">Add New</a>
+      </div>
+    </div>
+    <div class="table-responsive">
+      {{ pagination.info }}
+      {{ pagination.links }}
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Package Name</th>
+              <th>Destination</th>
+              <th>Trip</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% if package_list %}
+                {% for package in package_list %}
+                    <tr>
+                        <td>{{ package.package_name }}</td>
+                        <td>{{ package.trip_name }}</td>
+                        <td>{{ package.dest_title }}</td>
+                        <td><a href="{{url_for('packages.packages_edit', package_id=package.idpackage)}}">Edit</a>
+                            | <a href="{{url_for('packages.package_delete', package_id=package.idpackage)}}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+              {% else %}
+              <tr>
+                  <td colspan="3" class="text-center">No records found</td>
+              </tr>
+              {% endif %}
+          </tbody>
+        </table>
+        {{ pagination.links }}
+      </div>
+</main>
+{% endblock %}
