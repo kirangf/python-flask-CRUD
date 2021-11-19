@@ -5,6 +5,11 @@ CRUD operation using python and flask.
 - Python3
 - Mysql 5.7+
 
+## Installation
+```
+composer require kirangf/python-flask-CRUD
+```
+
 ## Create Virtual Environment
 Use a virtual environment to manage the dependencies for your project, both in development and in production.
 ```
